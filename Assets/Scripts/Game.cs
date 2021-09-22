@@ -17,7 +17,6 @@ public class Game : MonoBehaviour
 
   void Start()
   {
-    PlayerPrefs.DeleteAll();
     TranslateIfNecessary();
     if (currentSceneIndex == 0)
     {
@@ -83,7 +82,7 @@ public class Game : MonoBehaviour
 
   public static bool CanPlay()
   {
-    return true;
+    return life > 0;
   }
 
   public static void DecreaseLife()
