@@ -11,12 +11,13 @@ public class Game : MonoBehaviour
   public static Text emojiText;
   public static int life = 30;
   public static int totalEmojis = 0;
-  public static int maxEmojis = 16;
+  public static int maxEmojis = 18;
   public static int currentSceneIndex = 0;
   public static bool warped = false;
 
   void Start()
   {
+    PlayerPrefs.DeleteAll();
     TranslateIfNecessary();
     if (currentSceneIndex == 0)
     {
@@ -82,7 +83,7 @@ public class Game : MonoBehaviour
 
   public static bool CanPlay()
   {
-    return life > 0;
+    return true;
   }
 
   public static void DecreaseLife()
