@@ -40,7 +40,7 @@ public class Player : MonoBehaviour
 
   private void Move()
   {
-    horizontal = Input.GetAxis("Horizontal");
+    horizontal = joystick.Horizontal;
     float amtToMove = horizontal * speed * Time.deltaTime;
     transform.Translate(Vector3.right * amtToMove);
     transform.position = new Vector2(Mathf.Clamp(transform.position.x, minX, maxX), transform.position.y);
@@ -53,12 +53,20 @@ public class Player : MonoBehaviour
 
   private void HandleFlight()
   {
-    if (Input.GetKey("space"))
+    for (int i = 0; i < Input.touchCount; i++)
     {
-      wings.SetActive(true);
-      rigidBody.AddForce(new Vector2(0, flyForce));
+      if (Input.GetTouch(i).position.x > Screen.width / 2.6f)
+      {
+        wings.SetActive(true);
+        rigidBody.AddForce(new Vector2(0, flyForce));
+        break;
+      }
+      else
+      {
+        wings.SetActive(false);
+      }
     }
-    else
+    if (Input.touchCount == 0)
     {
       wings.SetActive(false);
     }
