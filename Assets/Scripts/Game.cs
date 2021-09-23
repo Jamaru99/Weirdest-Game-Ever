@@ -18,11 +18,6 @@ public class Game : MonoBehaviour
   void Start()
   {
     TranslateIfNecessary();
-    if (currentSceneIndex == 0)
-    {
-      GooglePlayGame.Init();
-      GooglePlayGame.Login((success) => { });
-    }
     lifeText = GameObject.Find("LifeText").GetComponent<Text>();
     emojiText = GameObject.Find("EmojiText").GetComponent<Text>();
     if (PlayerPrefs.HasKey("life"))
@@ -65,7 +60,6 @@ public class Game : MonoBehaviour
     PlayerPrefs.SetInt(emojiName, 1);
     if (totalEmojis == maxEmojis)
     {
-      GooglePlayGame.ReportAchievementProgress("CgkItbyBp-sLEAIQAA", 100.0f, (success) => { });
       Destroy(GameObject.Find("Warp"));
       Destroy(GameObject.Find("EnemyDemon"));
       Destroy(GameObject.Find("EnemyShooter"));
@@ -82,7 +76,7 @@ public class Game : MonoBehaviour
 
   public static bool CanPlay()
   {
-    return life > 0;
+    return true;
   }
 
   public static void DecreaseLife()
