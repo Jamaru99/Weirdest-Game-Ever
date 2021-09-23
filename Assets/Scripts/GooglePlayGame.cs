@@ -8,7 +8,6 @@ using System;
 
 public class GooglePlayGame : MonoBehaviour
 {
-
   public static void Init()
   {
     PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder().Build();
@@ -17,7 +16,7 @@ public class GooglePlayGame : MonoBehaviour
     PlayGamesPlatform.Activate();
   }
 
-  public static void Login(Action<bool> onLogin)
+  public static void Login(Action<SignInStatus> onLogin)
   {
 
     if (Social.Active == null)
@@ -29,11 +28,13 @@ public class GooglePlayGame : MonoBehaviour
     {
       return;
     }
+
     PlayGamesPlatform.Instance.Authenticate(SignInInteractivity.NoPrompt, (result) =>
     {
-      onLogin(true);
+      onLogin(result);
     });
   }
+
   public static bool IsAuthenticated()
   {
     return Social.localUser.authenticated;
@@ -41,7 +42,6 @@ public class GooglePlayGame : MonoBehaviour
 
   public static void IncrementAchievement(string achievement, int points, Action<bool> onIncrementAchievement)
   {
-
     PlayGamesPlatform.Instance.IncrementAchievement(achievement, points, (bool success) =>
     {
       if (onIncrementAchievement != null)
@@ -50,22 +50,17 @@ public class GooglePlayGame : MonoBehaviour
       }
 
     });
-
   }
 
   public static void ReportAchievementProgress(string achievementID, float progress, Action<bool> onIncrementAchievement)
   {
-
     Social.ReportProgress(achievementID, progress, (bool success) =>
     {
-
       if (onIncrementAchievement != null)
       {
         onIncrementAchievement(success);
       }
-
     });
-
   }
 
 }
